@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { EndSessionDialog } from "./EndSessionDialog";
 import {
   formatClock,
   remaining,
@@ -158,20 +159,12 @@ export function FocusTimer({
         )}
       </div>
       {confirmEnd && timer && (
-        <div className="end-confirm">
-          <p>End this session without adding it to your history?</p>
-          <button
-            className="quiet"
-            onClick={() => {
-              if (dispatch({ type: "cancel" })) setConfirmEnd(false);
-            }}
-          >
-            End without saving
-          </button>
-          <button className="quiet" onClick={() => setConfirmEnd(false)}>
-            Keep going
-          </button>
-        </div>
+        <EndSessionDialog
+          onEnd={() => {
+            if (dispatch({ type: "cancel" })) setConfirmEnd(false);
+          }}
+          onClose={() => setConfirmEnd(false)}
+        />
       )}
       <p className="timer-note">
         {timer
